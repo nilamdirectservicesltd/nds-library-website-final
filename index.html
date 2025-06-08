@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Nilam Direct Services Library</title>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-light: #FCEF91;
+      --primary: #FB9E3A;
+      --secondary: #E6521F;
+      --accent: #EA2F14;
+    }
+    
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding-top: 80px;
+      background-image: linear-gradient(135deg, rgba(252, 239, 145, 0.1) 0%, rgba(251, 158, 58, 0.1) 100%);
+    }
+    
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%) !important;
+      box-shadow: 0 4px 20px rgba(234, 47, 20, 0.2);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .navbar:hover {
+      box-shadow: 0 6px 25px rgba(234, 47, 20, 0.3);
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: white !important;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar-brand:hover {
+      transform: scale(1.05);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    
+    .nav-link {
+      color: white !important;
+      font-weight: 500;
+      margin: 0 10px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      color: var(--primary-light) !important;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-light);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .dropdown-menu {
+      background: white;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    .dropdown-item {
+      color: var(--secondary) !important;
+      transition: all 0.2s ease;
+    }
+    
+    .dropdown-item:hover {
+      background: var(--primary-light);
+      color: var(--accent) !important;
+    }
+    
+    section {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-left: 5px solid var(--primary);
+    }
+    
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(230, 82, 31, 0.2);
+      border-left: 5px solid var(--accent);
+    }
+    
+    h2 {
+      color: var(--secondary);
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--primary);
+      transition: all 0.3s ease;
+    }
+    
+    section:hover h2::after {
+      width: 100px;
+      background: var(--accent);
+    }
+    
+    a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    
+    a:hover {
+      color: var(--accent);
+    }
+    
+    a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+    
+    a:hover::after {
+      width: 100%;
+    }
+    
+    iframe {
+      border-radius: 8px;
+      border: 1px solid var(--primary-light);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(251, 158, 58, 0.1);
+    }
+    
+    iframe:hover {
+      box-shadow: 0 8px 20px rgba(230, 82, 31, 0.2);
+      transform: scale(1.01);
+    }
+    
+    .btn-primary {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      border: none;
+      padding: 10px 25px;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(251, 158, 58, 0.4);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(230, 82, 31, 0.6);
+      background: linear-gradient(45deg, var(--secondary), var(--accent));
+    }
+    
+    /* Pulse animation for important elements */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    /* Floating animation */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .float {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    /* Hero section */
+    .hero {
+      background: linear-gradient(135deg, rgba(252, 239, 145, 0.2) 0%, rgba(251, 158, 58, 0.2) 100%);
+      padding: 60px 0;
+      margin-bottom: 40px;
+      border-radius: 0 0 20px 20px;
+    }
+    
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(45deg, var(--secondary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    /* Footer */
+    footer {
+      background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%);
+      color: white;
+      padding: 50px 0 20px;
+      margin-top: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .footer-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      margin: 0 15px;
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      background: white;
+      color: var(--accent);
+      transform: translateY(-5px) scale(1.1);
+    }
+    
+    .copyright {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
+    .footer-wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%23ffffff'%3E%3C/path%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%23ffffff'%3E%3C/path%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%23ffffff'%3E%3C/path%3E%3C/svg%3E");
+      background-size: cover;
+      background-repeat: no-repeat;
+      opacity: 0.1;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .navbar-collapse {
+        background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%);
+        padding: 20px;
+        border-radius: 0 0 10px 10px;
+      }
+      
+      .nav-item {
+        margin: 10px 0;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      section {
+        padding: 20px;
+      }
+      
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .social-links a {
+        width: 40px;
+        height: 40px;
+        margin: 0 10px;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <a class="navbar-brand animate__animated animate__fadeInLeft" href="#">
+          <i class="fas fa-book-open me-2"></i>Nilam Direct Services Library
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#nds-automatic-upi-qr-code-generator">QR Generator</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#nds-business-soundbox">Soundbox</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#nds-business-payment-gateway">Payment Gateway</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#nds-istore-appstore">Appstore</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero text-center animate__animated animate__fadeIn">
+      <div class="container">
+        <h1 class="mb-4">NDS Services Collection</h1>
+        <p class="lead">Explore our suite of free business tools designed to simplify your transactions</p>
+      </div>
+    </div>
+    
+    <div class="container">
+      <section id="nds-automatic-upi-qr-code-generator" class="animate__animated animate__fadeInUp">
+        <h2>Automatic UPI QR Code Generator</h2>
+        <p class="lead">Instantly create customized UPI QR codes for your business, free of charge and hassle-free!</p>
+        <p>Website Link: <a href="https://bit.ly/48vHLIU" class="pulse">NDS Auto UPI QR Code Generator</a></p>
+        <iframe src="https://bit.ly/48vHLIU" width="100%" height="400px" class="mt-4"></iframe>
+        <div class="text-center mt-3">
+          <a href="https://bit.ly/48vHLIU" class="btn btn-primary">Try It Now</a>
+        </div>
+      </section>
+      
+      <section id="nds-business-soundbox" class="animate__animated animate__fadeInUp animate__delay-1s">
+        <h2>Business Soundbox</h2>
+        <p class="lead">A simple tool for your business to speak the amount that received on your account with a confirmation sound just like Paytm</p>
+        <p>Website: <a href="https://bit.ly/3uOYl8P" class="pulse">Nilam Direct Business Soundbox Website</a></p>
+        <iframe src="https://bit.ly/3uOYl8P" width="100%" height="400px" class="mt-4"></iframe>
+        <div class="text-center mt-3">
+          <a href="https://bit.ly/3uOYl8P" class="btn btn-primary">Explore Soundbox</a>
+        </div>
+      </section>
+      
+      <section id="nds-business-payment-gateway" class="animate__animated animate__fadeInUp animate__delay-2s">
+        <h2>Business Payment Gateway</h2>
+        <p class="lead">A simple tool for your business to speak the amount that received on your account</p>
+        <p>Website: <a href="https://bit.ly/3T76DSQ" class="pulse">NDS Business Payment Gateway</a></p>
+        <iframe src="https://bit.ly/3T76DSQ" width="100%" height="400px" class="mt-4"></iframe>
+        <div class="text-center mt-3">
+          <a href="https://bit.ly/3T76DSQ" class="btn btn-primary">View Gateway</a>
+        </div>
+      </section>
+
+      <section id="nds-istore-appstore" class="animate__animated animate__fadeInUp animate__delay-3s">
+        <h2>NDS Appstore</h2>
+        <p class="lead">A simple app where you can download all the NDS Apps for Android Only!</p>
+        <p>Website: <a href="https://www.mediafire.com/file/cqghiz07t4qthj6/_iStore_NDS_17978025.apk/file" class="pulse">iStore - NDS</a></p>
+        <iframe src="https://nilamdirectservicesltd.github.io/iSTORE-NDS-Website-Final/" width="100%" height="400px" class="mt-4"></iframe>
+        <div class="text-center mt-3">
+          <a href="https://www.mediafire.com/file/cqghiz07t4qthj6/_iStore_NDS_17978025.apk/file" class="btn btn-primary">Download App</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="animate__animated animate__fadeIn">
+    <div class="footer-wave"></div>
+    <div class="container footer-content">
+      <div class="text-center">
+        <h4 class="text-white mb-4">Connect With Us</h4>
+        <div class="social-links mt-4">
+          <a href="https://www.instagram.com/nilamdirectservices.india/" target="_blank" title="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://x.com/nilamdirectSvcs" target="_blank" title="Twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="https://nilam-direct-services-ltd-ind.framer.ai/social" target="_blank" title="Website">
+            <i class="fas fa-globe"></i>
+          </a>
+        </div>
+        
+        <div class="copyright">
+          &copy; 2025 Nilam Direct Services Ltd. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Additional smooth scroll animation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    
+    // Animation on scroll
+    window.addEventListener('scroll', function() {
+      const sections = document.querySelectorAll('section');
+      const windowHeight = window.innerHeight;
+      
+      sections.forEach(section => {
+        const sectionPos = section.getBoundingClientRect().top;
+        if (sectionPos < windowHeight - 100) {
+          section.classList.add('animate__animated', 'animate__fadeInUp');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
